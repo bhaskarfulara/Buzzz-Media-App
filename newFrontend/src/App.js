@@ -1,0 +1,37 @@
+
+import {BrowserRouter as Router,Route,Routes} from 'react-router-dom'
+import './App.css';
+import Header from './Component/Header/Header';
+import { loadUser } from './Actions/User';
+import Home  from './Component/Home/Home.jsx';
+import Login from './Component/Login/Login';
+import {useEffect,useState} from 'react'
+import { useDispatch,useSelector  } from 'react-redux';
+import Account from './Component/Account/Account';
+import NewPost from './Component/NewPost/NewPost.jsx'
+
+function App() {
+  const {isAuthenticated} = useSelector((state)=> state.user)
+  // const [logeedIn,setLoggedIn]=useState(false);
+  
+  const dispatch=useDispatch();
+  useEffect(() => {
+   dispatch(loadUser())
+ },[dispatch])
+
+  return (
+    <Router>
+      {isAuthenticated && <Header/>}
+      <Routes>
+         <Route path="/" element={isAuthenticated ?<Home/> : <Login/>}/>
+         <Route path="/account" element={isAuthenticated ?<Account/>: <Login/>}/>
+         <Route path="/newpost" element={isAuthenticated ?<NewPost/>: <Login/>}/>
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+
+
