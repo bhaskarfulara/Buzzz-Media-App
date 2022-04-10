@@ -47,18 +47,17 @@ function Account() {
                 {
                     posts && posts.length > 0 ? posts.map((post) => (
                         <Post
-                            postImage={"https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg"}
                             key={posts._id}
                             caption={post.caption}
                             postId={post._id}
-                            // postImage={post.image}
+                            postImage={post.image.url}
                             likes={post.likes}
                             comments={post.comments}
                             ownerImage={post.owner.avatar}
                             ownerName={post.owner.name}
                             ownerId={post.owner._id}
                             isAccount={true}
-
+                            isDelete={true}
                         />
                     )) : <Typography variant="h6">Make Your First Post</Typography>
                 }

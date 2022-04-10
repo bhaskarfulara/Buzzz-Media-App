@@ -1,4 +1,4 @@
-var bodyParser = require('body-parser')
+
 
 const express = require("express");
 
@@ -9,14 +9,11 @@ if(process.env.NODE_ENV !== "production"){
 }
 
 
-//using middleware
-app.use(bodyParser.json({ limit: '50mb' }))
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }))
 
 
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.json({limit:'50mb'}));
+app.use(express.urlencoded({limit:'50mb',extended:true}));
 app.use(cookieParser());
 
 //importing routes

@@ -20,7 +20,7 @@ exports.createPost = async (req,res) => {
 
         const user = await User.findById(req.user._id);
 
-        user.posts.push(newPost._id);
+        user.posts.unshift(newPost._id);
 
         
         
@@ -30,7 +30,8 @@ exports.createPost = async (req,res) => {
 
         res.status(201).json({
             success:true,
-            post:newPost,
+            message: "Post created",
+    
         })
 
     }catch(error){
@@ -59,7 +60,7 @@ exports.deletePost = async (req, res) => {
         });
       }
   
-      // await cloudinary.v2.uploader.destroy(post.image.public_id);
+      await cloudinary.uploader.destroy(post.image.public_id);
   
       await post.remove();
   
@@ -126,7 +127,7 @@ exports.getPostOffriends = async (req,res) => {
 
     const posts = await Post.find({
       owner:{
-        $in:user.friendslist,
+        $in:user.friends,
       
       },
     }).populate("owner likes comments.user");
