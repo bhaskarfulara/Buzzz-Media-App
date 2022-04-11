@@ -20,6 +20,36 @@ export const loginUser = (email, password) => async (dispatch) => {
 }
 
 
+export const registerUser =
+  (name, email, password, avatar) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "RegisterRequest",
+      });
+
+      const { data } = await axios.post(
+        "/api/register",
+        { name, email, password, avatar },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      dispatch({
+        type: "RegisterSuccess",
+        payload: data.user,
+      });
+    } catch (error) {
+      dispatch({
+        type: "RegisterFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+
 export const logoutUser = (email, password) => async (dispatch) => {
     try {
         dispatch({
@@ -114,4 +144,65 @@ export const getMyPosts = () => async (dispatch) => {
       });
     }
   };
+
+
+
+  export const updateProfile =
+  (name, email,avatar) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "updateProfileRequest",
+      });
+
+      const { data } = await axios.put(
+        "/api/update/profile",
+        { name, email,avatar },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      dispatch({
+        type: "updateProfileSuccess",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "updateProfileFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+  export const updatePassword =
+  (oldPassword, newPassword) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "updatePasswordRequest",
+      });
+
+      const { data } = await axios.put(
+        "/api/update/password",
+        { oldPassword, newPassword },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      dispatch({
+        type: "updatePasswordSuccess",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "updatePasswordFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
+
 

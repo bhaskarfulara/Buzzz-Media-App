@@ -1,11 +1,48 @@
 const res = require("express/lib/response");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const cloudinary =require('cloudinary')
+
 //register
+
+// exports.register = async(req,res) => {
+//   try{
+
+//    const {name,email,password,avatar} = req.body;
+//    let user = await User.findOne({email});
+//    if(user){ 
+//         return res
+//     .status(400)
+//     .json({
+//         success:false,
+//         msg:"user already exists"
+//     });
+
+//     } 
+
+//     const myCloud=await cloudinary.uploader.upload(avatar,{folder:"avatars",})
+
+//     user = await User.create({name,email,password,avatar:{public_id:myCloud.public_id,url:myCloud.secure_url}});
+
+//     res.status(201).json({success:true,user});
+
+//   }catch(error){
+
+//    res.status(500).json({
+//        success:false,
+//        message:error.message,
+//    })
+
+//   }
+
+
+// }
+
+
 exports.register = async(req,res) => {
   try{
 
-   const {name,email,password} = req.body;
+   const {name,email,password,avatar} = req.body;
    let user = await User.findOne({email});
    if(user){ 
         return res
@@ -16,11 +53,28 @@ exports.register = async(req,res) => {
     });
 
     } 
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+      folder: "avatars",
+    });
+
+    user = await User.create({name,email,password,
+    avatar:{
+      public_id:myCloud.public_id,
+      url:myCloud.secure_url,
+    },
 
 
-    user = await User.create({name,email,password});
-
-    res.status(201).json({success:true,user});
+  });
+  const token = await user.generateToken();
+  const options = {
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+  };
+  res.status(201).cookie("token", token, options).json({
+    success: true,
+    user,
+    token,
+  });
 
   }catch(error){
 
@@ -194,6 +248,15 @@ exports.updatePassword = async (req, res) => {
         user.email = email;
       }
   
+
+      if(avatar){
+        await cloudinary.uploader.destroy(user.avatar.public_id);
+
+        const myCloud=await cloudinary.uploader.upload(avatar,{folder:"avatars",})
+        user.avatar.public_id=myCloud.public_id
+        user.avatar.url= myCloud.secure_url
+
+      }
     //for avatar
   
       await user.save();
@@ -257,7 +320,7 @@ exports.deleteMyProfile = async (req,res)=>{
 exports.myProfile = async (req,res)=>{
   try {
 
-   const user = await User.findById(req.user._id).populate("posts friends");
+   const user = await User.findById(req.user._id).populate("posts friends friendslist");
 
    res.status(200).json({
      success:true,

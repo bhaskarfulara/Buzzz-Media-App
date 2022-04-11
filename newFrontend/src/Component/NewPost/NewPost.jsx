@@ -2,6 +2,7 @@ import { Button, Typography } from '@mui/material'
 import React,{useState,useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewPost } from '../../Actions/Post'
+import { loadUser } from '../../Actions/User'
 import './NewPost.css'
 function NewPost() {
 
@@ -23,9 +24,10 @@ function NewPost() {
 
     const dispatch=useDispatch();
 
-    const submitHandler=(e)=>{
+    const submitHandler=async(e)=>{
         e.preventDefault();
-        dispatch(createNewPost(caption,image));
+        await dispatch(createNewPost(caption,image));
+        dispatch(loadUser());
     }
 
     useEffect(() => {

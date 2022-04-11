@@ -12,7 +12,7 @@ const Login=()=> {
   const [email,setemail]=useState("");
   const [password,setPass]=useState();
   const dispatch =useDispatch();
-  
+  const {error}=useSelector(state=>state.user)  
 
     const loginHandler = (e) => {
     e.preventDefault();
@@ -20,6 +20,13 @@ const Login=()=> {
     dispatch(loginUser(email, password));
  
   };
+
+  useEffect(() => {
+    if(error){
+      alert(error)
+      dispatch({type:"clearErrors"})
+    }
+  }, [error,dispatch])
 
   
 

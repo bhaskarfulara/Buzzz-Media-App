@@ -60,7 +60,7 @@ function Home() {
             <User 
             key={user._id}
             userId={user._id}
-            name={user.name} avatar={user.avatar}/>
+            name={user.name} avatar={user.avatar.url}/>
           )):<Typography>No users yet</Typography>
         }
        

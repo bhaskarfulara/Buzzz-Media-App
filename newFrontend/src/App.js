@@ -5,10 +5,13 @@ import Header from './Component/Header/Header';
 import { loadUser } from './Actions/User';
 import Home  from './Component/Home/Home.jsx';
 import Login from './Component/Login/Login';
-import {useEffect,useState} from 'react'
+import {useEffect} from 'react'
 import { useDispatch,useSelector  } from 'react-redux';
 import Account from './Component/Account/Account';
 import NewPost from './Component/NewPost/NewPost.jsx'
+import Register from './Component/Register/Register';
+import UpdateProfile from './Component/UpdateProfile/UpdateProfile';
+import Updatepassword from './Component/UpdatePassword/Updatepassword';
 
 function App() {
   const {isAuthenticated} = useSelector((state)=> state.user)
@@ -18,7 +21,7 @@ function App() {
   useEffect(() => {
    dispatch(loadUser())
  },[dispatch])
-
+ 
   return (
     <Router>
       {isAuthenticated && <Header/>}
@@ -26,6 +29,9 @@ function App() {
          <Route path="/" element={isAuthenticated ?<Home/> : <Login/>}/>
          <Route path="/account" element={isAuthenticated ?<Account/>: <Login/>}/>
          <Route path="/newpost" element={isAuthenticated ?<NewPost/>: <Login/>}/>
+         <Route path="/register" element={isAuthenticated ? <Account/> : <Register/>}/>
+         <Route path="/update/profile" element={isAuthenticated? <UpdateProfile/> : <Login/>}></Route>
+         <Route path="/update/password" element={isAuthenticated? <Updatepassword/> : <Login/>}></Route>
       </Routes>
     </Router>
   );

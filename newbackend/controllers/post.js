@@ -6,7 +6,7 @@ const cloudinary=require("cloudinary")
 exports.createPost = async (req,res) => {
     try{
 
-        const myCloud=await cloudinary.uploader.upload(req.body.image,{folder:"posts"});
+        const myCloud=await cloudinary.uploader.upload(req.body.image,{folder:"posts",});
         const newPostData = {
             caption:req.body.caption,
             image:{

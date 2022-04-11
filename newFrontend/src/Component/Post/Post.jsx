@@ -130,7 +130,7 @@ const Post = ({ postId,
                     }
                 </Button>
                 <Button onClick={() => setCommentToggle(!commentToggle)}><ChatBubbleOutline /></Button>
-                {isDelete ? <Button onClick={()=>deletePostHandler}><DeleteOutline /></Button> : null}
+                {isDelete ? <Button onClick={()=>deletePostHandler()}><DeleteOutline /></Button> : null}
 
             </div>
             <Dialog open={likesUser} onClose={() => setlikesUser(!likesUser)}>

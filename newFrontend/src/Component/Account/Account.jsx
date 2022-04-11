@@ -63,7 +63,7 @@ function Account() {
                 }
             </div>
             <div className="accountright">
-                <Avatar src={user.avatar} sx={{ height: "8vmax", width: "8vmax" }} />
+                <Avatar src={user.avatar.url} sx={{ height: "8vmax", width: "8vmax" }} />
 
                 <Typography variant="h5">{user.name}</Typography>
                 <div>
@@ -87,7 +87,7 @@ function Account() {
                         user.friends.map((friend) => (<User
                             key={friend._id}
                             userId={friend._id}
-                            name={friend.name} avatar={friend.avatar} />)):<Typography style={{margin:"2vmax"}}>No Friends</Typography>
+                            name={friend.name} avatar={friend.avatar.url} />)):<Typography style={{margin:"2vmax"}}>No Friends</Typography>
                     }
                 </div>
             </Dialog>
