@@ -147,6 +147,9 @@ export const getMyPosts = () => async (dispatch) => {
 
 
 
+
+
+
   export const updateProfile =
   (name, email,avatar) => async (dispatch) => {
     try {
@@ -226,3 +229,61 @@ export const getMyPosts = () => async (dispatch) => {
   };
 
 
+
+  export const getUserPosts = (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "userPostsRequest",
+      });
+  
+      const { data } = await axios.get(`/api/userposts/${id}`);
+      dispatch({
+        type: "userPostsSuccess",
+        payload: data.posts,
+      });
+    } catch (error) {
+      dispatch({
+        type: "userPostsFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+
+  export const getUserProfile = (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "userProfileRequest",
+      });
+  
+      const { data } = await axios.get(`/api/user/${id}`);
+      dispatch({
+        type: "userProfileSuccess",
+        payload: data.user,
+      });
+    } catch (error) {
+      dispatch({
+        type: "userProfileFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+  export const followAndUnfollowUser = (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "followUserRequest",
+      });
+  
+      const { data } = await axios.get(`/api/follow/${id}`);
+      dispatch({
+        type: "followUserSuccess",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "followUserFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };

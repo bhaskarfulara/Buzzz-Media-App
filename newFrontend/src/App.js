@@ -12,6 +12,7 @@ import NewPost from './Component/NewPost/NewPost.jsx'
 import Register from './Component/Register/Register';
 import UpdateProfile from './Component/UpdateProfile/UpdateProfile';
 import Updatepassword from './Component/UpdatePassword/Updatepassword';
+import UserProfile from './Component/UserProfile/UserProfile';
 
 function App() {
   const {isAuthenticated} = useSelector((state)=> state.user)
@@ -30,8 +31,12 @@ function App() {
          <Route path="/account" element={isAuthenticated ?<Account/>: <Login/>}/>
          <Route path="/newpost" element={isAuthenticated ?<NewPost/>: <Login/>}/>
          <Route path="/register" element={isAuthenticated ? <Account/> : <Register/>}/>
+         
          <Route path="/update/profile" element={isAuthenticated? <UpdateProfile/> : <Login/>}></Route>
+
          <Route path="/update/password" element={isAuthenticated? <Updatepassword/> : <Login/>}></Route>
+
+         <Route path="/user/:id" element={isAuthenticated? <UserProfile/> : <Login/>}></Route>
       </Routes>
     </Router>
   );
