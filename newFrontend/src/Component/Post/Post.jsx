@@ -129,6 +129,7 @@ const Post = ({ postId,
                         liked ? <Favorite style={{ color: "red" }} /> : <FavoriteBorder />
                     }
                 </Button>
+                
                 <Button onClick={() => setCommentToggle(!commentToggle)}><ChatBubbleOutline /></Button>
                 {isDelete ? <Button onClick={()=>deletePostHandler()}><DeleteOutline /></Button> : null}
 

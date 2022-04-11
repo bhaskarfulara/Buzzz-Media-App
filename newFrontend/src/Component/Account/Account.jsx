@@ -17,12 +17,18 @@ function Account() {
     const { loading, error, posts } = useSelector((state) => state.myPosts)
     const {
         error: likeError,
-        message
+        message,
+        loading: deleteLoading
     } = useSelector((state) => state.like);
 
     const logOutHandler=async ()=>{
        await dispatch(logoutUser())
         alert("LoggedOut Successfully")
+    }
+
+    const deleteProfileHandler=async()=>{
+        await dispatch(deleteMyProfile());
+        dispatch(logoutUser());
     }
 
     useEffect(() => {
@@ -77,7 +83,7 @@ function Account() {
                 <Button variant="contained" onClick={logOutHandler}>Logout</Button>
                 <Link to={"/update/profile"}>Edit Profile</Link>
                 <Link to={"/update/password"}>Change Password</Link>
-                <Button variant="text" style={{color:"red",margin:"2vmax"}}>Delete My Profile</Button>
+                <Button variant="text" style={{color:"red",margin:"2vmax"}}onClick={deleteProfileHandler} disabled={deleteLoading}>Delete My Profile</Button>
 
                 <Dialog open={friendsToggle} onClose={() => setFriendsToggle(!friendsToggle)}>
                 <div className="DialogBox">

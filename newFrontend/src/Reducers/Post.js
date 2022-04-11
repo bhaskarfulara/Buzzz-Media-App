@@ -37,7 +37,7 @@ export const likeReducer = createReducer(initialState, {
         state.loading = false
         state.error = action.payload
     },
-    
+
     newPostRequest: (state) => {
         state.loading = true;
     },
@@ -90,6 +90,17 @@ export const likeReducer = createReducer(initialState, {
         state.message = action.payload;
     },
     updatePasswordFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    deleteProfileRequest: (state) => {
+        state.loading = true;
+    },
+    deleteProfileSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+    },
+    deleteProfileFailure: (state, action) => {
         state.loading = false;
         state.error = action.payload;
     },

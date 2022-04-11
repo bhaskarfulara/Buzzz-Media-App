@@ -13,6 +13,7 @@ const Login=()=> {
   const [password,setPass]=useState();
   const dispatch =useDispatch();
   const {error}=useSelector(state=>state.user)  
+  const {message}=useSelector(state=>state.user)
 
     const loginHandler = (e) => {
     e.preventDefault();
@@ -26,7 +27,11 @@ const Login=()=> {
       alert(error)
       dispatch({type:"clearErrors"})
     }
-  }, [error,dispatch])
+    if(message){
+      alert(message)
+      dispatch({type:"clearMessage"})
+    }
+  }, [error,dispatch,message])
 
   
 
@@ -54,9 +59,9 @@ const Login=()=> {
         onChange={(e) => setPass(e.target.value)}
       />
 
-      <Link to="/forgot/password">
+      {/* <Link to="/forgot/password">
         <Typography>Forgot Password?</Typography>
-      </Link>
+      </Link> */}
 
       <Button type="submit">Login</Button>
 

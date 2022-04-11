@@ -53,7 +53,7 @@ exports.register = async(req,res) => {
     });
 
     } 
-    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+    const myCloud = await cloudinary.uploader.upload(avatar, {
       folder: "avatars",
     });
 
@@ -62,8 +62,6 @@ exports.register = async(req,res) => {
       public_id:myCloud.public_id,
       url:myCloud.secure_url,
     },
-
-
   });
   const token = await user.generateToken();
   const options = {
@@ -278,8 +276,10 @@ exports.deleteMyProfile = async (req,res)=>{
 
     const user = await   User.findById(req.user._id);
     const posts = user.posts;
-    // const friendslist = user.friendslist;
-    // const userId = user._id;
+    const friendslist = user.friendslist;
+    const userId = user._id;
+
+    await cloudinary.uploader.destroy(user.avatar.public_id);
 
     await user.remove();
     //logout user
@@ -290,19 +290,20 @@ exports.deleteMyProfile = async (req,res)=>{
     //delete all post of user
     for(let i=0;i<posts.length;i++){
       const post = await Post.findById(posts[i]);
+      await cloudinary.uploader.destroy(post.image.public_id)
       await post.remove();
 
     }
 
     
-    // for(let i=0;i<friendslist.length;i++){
-    //   const ff = await User.findById(friendslist[i]);
-    //   const index = ff.friends.indexOf(userId);
-    //   ff.friends.splice(index,1);
-    //   await ff.save();
+    for(let i=0;i<friendslist.length;i++){
+      const ff = await User.findById(friendslist[i]);
+      const index = ff.friends.indexOf(userId);
+      ff.friends.splice(index,1);
+      await ff.save();
       
 
-    // }
+    }
     res.status(200).json({
       success:true,
       message:"Profile Deleted",

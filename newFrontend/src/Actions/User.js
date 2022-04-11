@@ -205,4 +205,24 @@ export const getMyPosts = () => async (dispatch) => {
     }
   };
 
+  export const deleteMyProfile = () => async (dispatch) => {
+    try {
+      dispatch({
+        type: "deleteProfileRequest",
+      });
+  
+      const { data } = await axios.delete("/api/delete/me");
+  
+      dispatch({
+        type: "deleteProfileSuccess",
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: "deleteProfileFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
+
 

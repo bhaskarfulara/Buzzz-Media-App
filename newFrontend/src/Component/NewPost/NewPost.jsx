@@ -27,14 +27,17 @@ function NewPost() {
     const submitHandler=async(e)=>{
         e.preventDefault();
         await dispatch(createNewPost(caption,image));
+        
         dispatch(loadUser());
     }
 
     useEffect(() => {
         if(error){
+          alert(error)
             dispatch({type:"clearErrors"});
         }
         if(message){
+          alert(message)
             dispatch({type:"clearMessage"});
         }
     }, [dispatch,error,message])
