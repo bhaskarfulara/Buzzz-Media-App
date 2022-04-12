@@ -13,6 +13,7 @@ import Register from './Component/Register/Register';
 import UpdateProfile from './Component/UpdateProfile/UpdateProfile';
 import Updatepassword from './Component/UpdatePassword/Updatepassword';
 import UserProfile from './Component/UserProfile/UserProfile';
+import Search from './Component/Search/Search';
 
 function App() {
   const {isAuthenticated} = useSelector((state)=> state.user)
@@ -37,6 +38,9 @@ function App() {
          <Route path="/update/password" element={isAuthenticated? <Updatepassword/> : <Login/>}></Route>
 
          <Route path="/user/:id" element={isAuthenticated? <UserProfile/> : <Login/>}></Route>
+
+
+         <Route path="search" element={<Search/>}></Route>
       </Routes>
     </Router>
   );

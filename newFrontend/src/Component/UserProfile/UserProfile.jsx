@@ -36,7 +36,7 @@ function UserProfile() {
         setAddFriend(!addfriend);
 
         await dispatch(followAndUnfollowUser(user._id));
-        // dispatch(getUserProfile(params.id))
+        dispatch(getUserProfile(params.id))
     }
 
     useEffect(() => {
